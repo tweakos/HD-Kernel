@@ -586,7 +586,7 @@ static struct microp_led_config up_led_config[] = {
 		.name = "button-backlight",
 		.type = LED_PWM,
 		.led_pin = 1 << 0,
-		.init_value = 100,
+		.init_value = 0xFF,
 		.fade_time = 5,
 	},
 };
