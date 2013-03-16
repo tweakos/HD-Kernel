@@ -80,7 +80,7 @@ static int g_first_update_charger_ctl = 1;
 
 #define FAST_POLL	(1 * 30)
 #define SLOW_POLL	(10 * 60)
-#define PREDIC_POLL	20
+#define PREDIC_POLL	(1 * 20)
 
 #define HTC_BATTERY_I2C_DEBUG_ENABLE		0
 #define HTC_BATTERY_DS2746_DEBUG_ENABLE 	1
@@ -924,6 +924,7 @@ BOOL do_power_alg(BOOL is_event_triggered)
 
 	/*powerlog_to_file(&poweralg);
 	update_os_batt_status(&poweralg);*/
+	htc_battery_update_change();
 
 #if HTC_BATTERY_DS2746_DEBUG_ENABLE
 	printk(DRIVER_ZONE "S=%d P=%d chg=%d cable=%d%d%d flg=%d%d%d dbg=%d%d%d%d fst_dischg=%d/%d [%u]\n",
@@ -1150,7 +1151,7 @@ ssize_t htc_battery_show_attr(struct device_attribute *attr, char *buf)
 static void ds2746_program_alarm(struct ds2746_device_info *di, int seconds)
 {
 	ktime_t low_interval = ktime_set(seconds, 0);
-	ktime_t slack = ktime_set(20, 0);
+	ktime_t slack = ktime_set(1, 0);
 	ktime_t next;
 
 	next = ktime_add(di->last_poll, low_interval);
@@ -1175,7 +1176,14 @@ static int cable_status_handler_func(struct notifier_block *nfb,
 			poweralg.is_superchg_software_charger_timeout = FALSE;	/* reset */
 			printk(DRIVER_ZONE "reset superchg software timer\n");
 		}
-		ds2746_blocking_notify(DS2746_CHARGING_CONTROL, &poweralg.charging_source);
+		//ds2746_blocking_notify(DS2746_CHARGING_CONTROL, &poweralg.charging_source);
+		if (g_di_ptr) {
+			alarm_try_to_cancel(&g_di_ptr->alarm);
+			ds2746_program_alarm(g_di_ptr, 0);
+		}
+		else {
+			printk(DRIVER_ZONE "charger in but no di ptr.\n");
+		}
 	} else if (cable_type == CONNECT_TYPE_USB) {
 		poweralg.is_cable_in = 1;
 		poweralg.is_china_ac_in = 0;
