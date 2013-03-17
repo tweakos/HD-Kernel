@@ -1182,7 +1182,7 @@ static int cable_status_handler_func(struct notifier_block *nfb,
 			ds2746_program_alarm(g_di_ptr, 0);
 		}
 		else {
-			printk(DRIVER_ZONE "charger in but no di ptr.\n");
+			printk(DRIVER_ZONE "charger out but no di ptr.\n");
 		}
 	} else if (cable_type == CONNECT_TYPE_USB) {
 		poweralg.is_cable_in = 1;
