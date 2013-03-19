@@ -104,7 +104,8 @@ extern void sweep2wake_setdev2(struct input_dev * input_device) {
 EXPORT_SYMBOL(sweep2wake_setdev2);
 
 static void sweep2wake_presspwr2(struct work_struct * sweep2wake_presspwr2_work) {
-mutex_trylock(&pwrlock2);
+if (!mutex_trylock(&pwrlock2))
+        return;
 	input_event(sweep2wake_pwrdev2, EV_KEY, KEY_POWER, 1);
 	input_event(sweep2wake_pwrdev2, EV_SYN, 0, 0);
 	msleep(100);
@@ -117,9 +118,7 @@ mutex_unlock(&pwrlock2);
 static DECLARE_WORK(sweep2wake_presspwr2_work, sweep2wake_presspwr2);
 
 void sweep2wake_pwrtrigger2(void) {
-	if (mutex_trylock(&pwrlock2)) {
 		schedule_work(&sweep2wake_presspwr2_work);
-	}
 	return;
 }
 #endif
