@@ -5119,6 +5119,7 @@
 0x00000000	bio_sector_offset	vmlinux	EXPORT_SYMBOL
 0x00000000	__cleancache_flush_page	vmlinux	EXPORT_SYMBOL
 0x00000000	cpu_idle_wait	vmlinux	EXPORT_SYMBOL_GPL
+0x00000000	ipv6_hash_secret	vmlinux	EXPORT_SYMBOL
 0x00000000	unregister_inetaddr_notifier	vmlinux	EXPORT_SYMBOL
 0x00000000	fb_pad_aligned_buffer	vmlinux	EXPORT_SYMBOL
 0x00000000	unregister_exec_domain	vmlinux	EXPORT_SYMBOL
