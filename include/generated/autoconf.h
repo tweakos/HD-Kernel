@@ -1,6 +1,6 @@
 /*
  * Automatically generated C config: don't edit
- * Linux/arm 3.0.68 Kernel Configuration
+ * Linux/arm 3.0.69 Kernel Configuration
  */
 #define CONFIG_IP6_NF_MATCH_AH 1
 #define CONFIG_NF_CONNTRACK_H323 1
@@ -558,7 +558,7 @@
 #define CONFIG_MSM_CAMERA 1
 #define CONFIG_DEBUG_KERNEL 1
 #define CONFIG_COMPAT_BRK 1
-#define CONFIG_LOCALVERSION "-HD-Kernel-T1"
+#define CONFIG_LOCALVERSION "-HD-Kernel-T2"
 #define CONFIG_MACH_SPADE 1
 #define CONFIG_MACH_NO_WESTBRIDGE 1
 #define CONFIG_CRYPTO 1
