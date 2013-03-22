@@ -79,7 +79,7 @@ static u64 boostpulse_boosted_time;
 static int boostpulse_duration;
 
 /* Go to hi speed when CPU load at or above this value. */
-#define DEFAULT_GO_HISPEED_LOAD 85
+#define DEFAULT_GO_HISPEED_LOAD 75
 static unsigned long go_hispeed_load;
 
 /*
