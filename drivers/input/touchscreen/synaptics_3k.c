@@ -92,6 +92,9 @@ int s2w_temp2 = 2;
 #elif defined(CONFIG_TOUCHSCREEN_SYNAPTICS_2FWAKE_ENABLED)
 int s2w_switch2 = 3;
 int s2w_temp2 = 3;
+#elif defined(CONFIG_TOUCHSCREEN_SYNAPTICS_SWEEP2WAKE_V2_ENABLED)
+int s2w_switch2 = 4;
+int s2w_temp2 = 4;
 #endif
 
 static struct input_dev * sweep2wake_pwrdev2;
@@ -216,7 +219,7 @@ static ssize_t synaptics_sweep2wake_show(struct device *dev,
 static ssize_t synaptics_sweep2wake_dump(struct device *dev,
 		struct device_attribute *attr, const char *buf, size_t count)
 {
-	if (buf[0] >= '0' && buf[0] <= '3' && buf[1] == '\n')
+	if (buf[0] >= '0' && buf[0] <= '4' && buf[1] == '\n')
 		if (s2w_switch2 != buf[0] - '0') {
 			s2w_temp2 = buf[0] - '0';
 			if (scr_suspended2 == false)
@@ -232,7 +235,9 @@ static ssize_t synaptics_sweep2wake_dump(struct device *dev,
 	else if (s2w_temp2 == 2)
 		printk(KERN_INFO "[sweep2wake]: TapTap2Wake Enabled.\n");
 	else if (s2w_temp2 == 3)
-		printk(KERN_INFO "[sweep2wake]: 2F2Wake Enabled.\n");	
+		printk(KERN_INFO "[sweep2wake]: 2F2Wake Enabled.\n");
+        else if (s2w_temp2 == 4)
+		printk(KERN_INFO "[sweep2wake]: v2 Enabled.\n");	
 
 	return count;
 }

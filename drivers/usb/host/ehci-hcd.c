@@ -1282,12 +1282,6 @@ MODULE_LICENSE ("GPL");
 #define PLATFORM_DRIVER_PRESENT
 #endif
 
-#ifdef CONFIG_USB_EHCI_MSM8255
-
-#include "ehci-msm8255.c" 
-#define  PLATFORM_DRIVER    ehci_msm8255_driver 
-#endif
-
 #ifdef CONFIG_USB_EHCI_HCD_PMC_MSP
 #include "ehci-pmcmsp.c"
 #define PLATFORM_DRIVER_PRESENT
