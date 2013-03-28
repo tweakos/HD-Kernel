@@ -513,18 +513,18 @@ static void synaptics_ts_work_func(struct work_struct *work)
 								if ((barrier2[0] == true) ||
 								   ((finger_data[loop_i][0] > prevx2) &&
 								    (finger_data[loop_i][0] < nextx2) &&
-									(finger_data[loop_i][1] > 1780))) {									
+									(finger_data[loop_i][1] > 1900))) {									
 									prevx2 = 300;
 									nextx2 = 680;
 									barrier2[0] = true;
 									if ((barrier2[1] == true) ||
 									   ((finger_data[loop_i][0] > prevx2) &&
 									    (finger_data[loop_i][0] < nextx2) &&
-									    (finger_data[loop_i][1] > 1780))) {
+									    (finger_data[loop_i][1] > 1900))) {
 										prevx2 = 680;
 										barrier2[1] = true;
 										if ((finger_data[loop_i][0] > prevx2) &&
-										    (finger_data[loop_i][1] > 1780)) {
+										    (finger_data[loop_i][1] > 1900)) {
 											if (finger_data[loop_i][0] > 880) {										
 											    if (exec_count2) {
 													sweep2wake_pwrtrigger2();
@@ -543,18 +543,18 @@ static void synaptics_ts_work_func(struct work_struct *work)
 								if ((barrier2[0] == true) ||
 								   ((finger_data[loop_i][0] < prevx2) &&
 								    (finger_data[loop_i][0] > nextx2) &&
-								    (finger_data[loop_i][1] > 1780))) {
+								    (finger_data[loop_i][1] > 1900))) {
 									prevx2 = 680;
 									nextx2 = 340;
 									barrier2[0] = true;
 									if ((barrier2[1] == true) ||
 									   ((finger_data[loop_i][0] < prevx2) &&
 									    (finger_data[loop_i][0] > nextx2) &&
-									    (finger_data[loop_i][1] > 1780))) {
+									    (finger_data[loop_i][1] > 1900))) {
 										prevx2 = 340;
 										barrier2[1] = true;
 										if ((finger_data[loop_i][0] < prevx2) &&
-										    (finger_data[loop_i][1] > 1780)) {
+										    (finger_data[loop_i][1] > 1900)) {
 											if (finger_data[loop_i][0] < 270) {
 												if (exec_count2) {
 													sweep2wake_pwrtrigger2();

@@ -406,7 +406,7 @@ static void report_psensor_input_event(struct isl29028_info *lpi,
 					uint16_t ps_adc)
 {
 	int val, ret;
-
+printk (KERN_INFO "psensor input event" );
 	getnstimeofday(&ts_end);
 	rtc_time_to_tm(ts_end.tv_sec, &tm_end);
 
@@ -1188,12 +1188,12 @@ static void psensor_set_kvalue(struct isl29028_info *lpi)
 
 	if (ps_kparam1 >> 16 == PS_CALIBRATED) {
 
-		lpi->ps_B_val = (ps_kparam1 >> 8) & 0xFF;
-		lpi->ps_C_val = ps_kparam1 & 0xFF;
+		lpi->ps_B_val = 3;
+		lpi->ps_C_val = 4;
 		lpi->ps_A_val = (ps_kparam2 >> 24) & 0xFF;
 		lpi->ps_X_val = (ps_kparam2 >> 16) & 0xFF;
-		lpi->ps_lt = (ps_kparam2 >> 8) & 0xFF;
-		lpi->ps_ht = ps_kparam2 & 0xFF;
+		lpi->ps_lt = 3;
+		lpi->ps_ht = 4;
 
 		DPS("%s: PS calibrated ps_B_val = 0x%x, ps_C_val = 0x%x"
 			", ps_A_val = 0x%x, ps_X_val = 0x%x, ps_lt = 0x%x"
@@ -1205,7 +1205,7 @@ static void psensor_set_kvalue(struct isl29028_info *lpi)
 		ps_threshold = (PS_CALIBRATED << 16) |
 			((lpi->ps_lt << 8) | lpi->ps_ht);
 
-		set_psensor_range(lpi->ps_lt, lpi->ps_ht);
+		set_psensor_range(3, 4);
 	} else
 		DPS("%s: Proximity not calibrated\n", __func__);
 }
