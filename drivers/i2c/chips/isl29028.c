@@ -406,6 +406,7 @@ static void report_psensor_input_event(struct isl29028_info *lpi,
 					uint16_t ps_adc)
 {
 	int val, ret;
+printk (KERN_INFO "psensor input event" );
 	getnstimeofday(&ts_end);
 	rtc_time_to_tm(ts_end.tv_sec, &tm_end);
 
@@ -1187,13 +1188,13 @@ static void psensor_set_kvalue(struct isl29028_info *lpi)
 
 	if (ps_kparam1 >> 16 == PS_CALIBRATED) {
 
-		lpi->ps_B_val = 3;
-		lpi->ps_C_val = 4;
+		lpi->ps_B_val = 2;
+		lpi->ps_C_val = 3;
 		lpi->ps_A_val = (ps_kparam2 >> 24) & 0xFF;
 		lpi->ps_X_val = (ps_kparam2 >> 16) & 0xFF;
-		lpi->ps_lt = 3;
-		lpi->ps_ht = 4;
-
+		lpi->ps_lt = 2;
+		lpi->ps_ht = 3;
+        lpi->enable_polling_ignore=0; 
 		DPS("%s: PS calibrated ps_B_val = 0x%x, ps_C_val = 0x%x"
 			", ps_A_val = 0x%x, ps_X_val = 0x%x, ps_lt = 0x%x"
 			", ps_ht = 0x%x\n",
@@ -1204,7 +1205,7 @@ static void psensor_set_kvalue(struct isl29028_info *lpi)
 		ps_threshold = (PS_CALIBRATED << 16) |
 			((lpi->ps_lt << 8) | lpi->ps_ht);
 
-		set_psensor_range(3, 4);
+		set_psensor_range(2, 3);
 	} else
 		DPS("%s: Proximity not calibrated\n", __func__);
 }
@@ -2006,7 +2007,7 @@ static int isl29028_probe(struct i2c_client *client,
 	lpi->mapping_table = pdata->mapping_table;
 	lpi->mapping_size = pdata->mapping_size;
 	lpi->ps_base_index = (pdata->mapping_size - 1);
-	lpi->enable_polling_ignore = pdata->enable_polling_ignore;
+	lpi->enable_polling_ignore = 0;
 
 	lp_info = lpi;
 
