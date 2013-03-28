@@ -208,4 +208,4 @@ int __init spade_init_panel(void);
 int htc_get_usb_accessory_adc_level(uint32_t *buffer);
 #endif
 
-#endif /* __ARCH_ARM_MACH_MSM_BOARD_SPADE_H */
+ /* __ARCH_ARM_MACH_MSM_BOARD_SPADE_H */
