@@ -406,7 +406,6 @@ static void report_psensor_input_event(struct isl29028_info *lpi,
 					uint16_t ps_adc)
 {
 	int val, ret;
-printk (KERN_INFO "psensor input event" );
 	getnstimeofday(&ts_end);
 	rtc_time_to_tm(ts_end.tv_sec, &tm_end);
 
