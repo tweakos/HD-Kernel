@@ -46,12 +46,13 @@ extern struct platform_device msm_device_mddi0;
  * res V4L2 video overlay - i.e. 1280x720x1.5x2
 */
 #define MSM_V4L2_VIDEO_OVERLAY_BUF_SIZE 2764800
+
 #define MSM_PMEM_ADSP_BASE  	0x2B900000
 #define MSM_PMEM_ADSP_SIZE	0x03600000 /* for 8M(4:3) + gpu effect */
 #define PMEM_KERNEL_EBI1_BASE   0x2D600000
 #define PMEM_KERNEL_EBI1_SIZE   0x00700000
-#define MSM_PMEM_SF_SIZE	0x1C00000
-#define MSM_PMEM_AUDIO_SIZE	0x00000000
+#define MSM_PMEM_SF_SIZE	0x02000000
+#define MSM_PMEM_AUDIO_SIZE	0x00200000
 
 #define MSM_PMEM_CAMERA_BASE	0x2DD00000
 #define MSM_PMEM_CAMERA_SIZE	0x00C00000
@@ -60,7 +61,10 @@ extern struct platform_device msm_device_mddi0;
 #define MSM_PMEM_MDP_SIZE	0x02000000
 
 #define MSM_FB_BASE		0x2FD00000
-#define MSM_FB_SIZE		0x00300000
+#ifdef CONFIG_FB_MSM_TRIPLE_BUFFER
+#define MSM_FB_SIZE		0x465000
+#else
+#define MSM_FB_SIZE		0x2EE000
 #endif
 
 /* GPIO definition */
@@ -208,4 +212,4 @@ int __init spade_init_panel(void);
 int htc_get_usb_accessory_adc_level(uint32_t *buffer);
 #endif
 
- /* __ARCH_ARM_MACH_MSM_BOARD_SPADE_H */
+#endif /* __ARCH_ARM_MACH_MSM_BOARD_SPADE_H */

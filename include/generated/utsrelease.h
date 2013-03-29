@@ -1,1 +1,1 @@
-#define UTS_RELEASE "3.0.70-HD-Kernel-T4+"
+#define UTS_RELEASE "3.0.71-HD-Kernel-T4+"
