@@ -2006,10 +2006,11 @@ static int cpufreq_set_limits_off
 
 	if (!try_module_get(cpufreq_driver->owner))
 		goto out_unlock;
-
+#ifdef CONFIG_SEC_DVFS
+#else
 	per_cpu(cpufreq_policy_save, cpu).min = min;
 	per_cpu(cpufreq_policy_save, cpu).max = max;
-
+#endif
 	ret = 0;
 
 	module_put(cpufreq_driver->owner);
