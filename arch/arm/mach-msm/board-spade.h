@@ -61,11 +61,7 @@ extern struct platform_device msm_device_mddi0;
 #define MSM_PMEM_MDP_SIZE	0x02000000
 
 #define MSM_FB_BASE		0x2FD00000
-#ifdef CONFIG_FB_MSM_TRIPLE_BUFFER
-#define MSM_FB_SIZE		0x465000
-#else
-#define MSM_FB_SIZE		0x2EE000
-#endif
+#define MSM_FB_SIZE		0x00300000
 
 /* GPIO definition */
 
