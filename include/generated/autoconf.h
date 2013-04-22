@@ -1,6 +1,6 @@
 /*
  * Automatically generated C config: don't edit
- * Linux/arm 3.0.71 Kernel Configuration
+ * Linux/arm 3.0.73 Kernel Configuration
  */
 #define CONFIG_IP6_NF_MATCH_AH 1
 #define CONFIG_NF_CONNTRACK_H323 1
@@ -72,6 +72,7 @@
 #define CONFIG_MSM_RPCSERVER_TIME_REMOTE 1
 #define CONFIG_MSM7X00A_SLEEP_MODE_POWER_COLLAPSE_SUSPEND 1
 #define CONFIG_NETFILTER_XT_MATCH_QUOTA2_LOG 1
+#define CONFIG_ALLOW_CPU_ALIGNMENT 1
 #define CONFIG_XFRM_IPCOMP 1
 #define CONFIG_CRYPTO_RNG2 1
 #define CONFIG_NETFILTER_NETLINK_QUEUE 1
@@ -560,7 +561,7 @@
 #define CONFIG_MSM_CAMERA 1
 #define CONFIG_DEBUG_KERNEL 1
 #define CONFIG_COMPAT_BRK 1
-#define CONFIG_LOCALVERSION "-HD-Kernel-T5.1"
+#define CONFIG_LOCALVERSION "-HD-Kernel-T6"
 #define CONFIG_MACH_SPADE 1
 #define CONFIG_MACH_NO_WESTBRIDGE 1
 #define CONFIG_CRYPTO 1

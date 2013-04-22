@@ -25,6 +25,9 @@
 #include <linux/platform_device.h>
 #include <linux/synaptics_i2c_rmi.h>
 #include <linux/slab.h>
+#include <linux/wakelock.h>
+
+static struct wake_lock sweep2wake_wake_lock;
 
 struct synaptics_ts_data {
 	uint16_t addr;
@@ -856,7 +859,9 @@ static int synaptics_ts_suspend(struct i2c_client *client, pm_message_t mesg)
 
 
 #ifdef CONFIG_TOUCHSCREEN_SYNAPTICS_SWEEP2WAKE
+
 	if (s2w_switch2 > 0) {
+	wake_lock(&sweep2wake_wake_lock);
 		//screen off, enable_irq_wake
 		scr_suspended2 = true;
 		enable_irq_wake(client->irq);
@@ -913,6 +918,7 @@ static int synaptics_ts_resume(struct i2c_client *client)
 
 #ifdef CONFIG_TOUCHSCREEN_SYNAPTICS_SWEEP2WAKE
 	if (s2w_switch2 > 0) {
+	wake_unlock(&sweep2wake_wake_lock);
 	ret = i2c_smbus_write_byte_data(client, ts->page_table[8].value, 0x01); /* sleep */		
 		msleep(150);
 		ret = 0;
@@ -1002,6 +1008,7 @@ static struct i2c_driver synaptics_ts_driver = {
 
 static int __devinit synaptics_ts_init(void)
 {
+wake_lock_init(&sweep2wake_wake_lock, WAKE_LOCK_SUSPEND, "sweep2wake");
 	return i2c_add_driver(&synaptics_ts_driver);
 }
 
