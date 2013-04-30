@@ -25,9 +25,10 @@
 #include <linux/platform_device.h>
 #include <linux/synaptics_i2c_rmi.h>
 #include <linux/slab.h>
+#ifdef CONFIG_TOUCHSCREEN_SYNAPTICS_SWEEP2WAKE
 #include <linux/wakelock.h>
+#endif
 
-static struct wake_lock sweep2wake_wake_lock;
 
 struct synaptics_ts_data {
 	uint16_t addr;
@@ -75,7 +76,7 @@ static ssize_t touch_vendor_show(struct device *dev,
 static DEVICE_ATTR(vendor, 0444, touch_vendor_show, NULL);
 
 #ifdef CONFIG_TOUCHSCREEN_SYNAPTICS_SWEEP2WAKE
-
+static struct wake_lock sweep2wake_wake_lock;
 bool scr_suspended2 = false,exec_count2 = true,s2w_switch2_changed = false;
 bool scr_on_touch2 = false, barrier2[2] = {false, false};
 bool f_pressed2 = false;
@@ -407,6 +408,7 @@ static void synaptics_ts_work_func(struct work_struct *work)
 					barrier2[0] = false;
 					barrier2[1] = false;
 					scr_on_touch2 = false;
+
 					if (s2w_switch2 == 2) {
 					if ((scr_suspended2 == true)&&
                          (f_pressed2 == true)){					
@@ -477,6 +479,15 @@ static void synaptics_ts_work_func(struct work_struct *work)
 						}
 					}
 #ifdef CONFIG_TOUCHSCREEN_SYNAPTICS_SWEEP2WAKE
+
+                if ((!wake_lock_active(&sweep2wake_wake_lock)) && 
+                    (scr_suspended2==true) && 
+                    (finger_count > 0) && 
+                    (finger_data[loop_i][0] > 30) &&
+					(finger_data[loop_i][1] > 1900)) {
+					wake_lock(&sweep2wake_wake_lock);
+					printk(KERN_INFO "[sweep2wake]: detected irq, wakelock\n");
+				}
 							if ((finger_count == 1) && (scr_suspended2 == true) && (s2w_switch2 == 2)) {			
 								f_pressed2 = true;								
 								//printk(KERN_INFO "finger pressed,ctime:%d",c_time2); 
@@ -859,9 +870,11 @@ static int synaptics_ts_suspend(struct i2c_client *client, pm_message_t mesg)
 
 
 #ifdef CONFIG_TOUCHSCREEN_SYNAPTICS_SWEEP2WAKE
-
+if (wake_lock_active(&sweep2wake_wake_lock)) {
+				wake_unlock(&sweep2wake_wake_lock);
+				printk(KERN_INFO "[sweep2wake]: resume, release wakelock \n");
+			}
 	if (s2w_switch2 > 0) {
-	wake_lock(&sweep2wake_wake_lock);
 		//screen off, enable_irq_wake
 		scr_suspended2 = true;
 		enable_irq_wake(client->irq);
@@ -917,8 +930,11 @@ static int synaptics_ts_resume(struct i2c_client *client)
 	struct synaptics_ts_data *ts = i2c_get_clientdata(client);
 
 #ifdef CONFIG_TOUCHSCREEN_SYNAPTICS_SWEEP2WAKE
+			if (wake_lock_active(&sweep2wake_wake_lock)) {
+				wake_unlock(&sweep2wake_wake_lock);
+				printk(KERN_INFO "[sweep2wake]: resume, release wakelock \n");
+			}
 	if (s2w_switch2 > 0) {
-	wake_unlock(&sweep2wake_wake_lock);
 	ret = i2c_smbus_write_byte_data(client, ts->page_table[8].value, 0x01); /* sleep */		
 		msleep(150);
 		ret = 0;
@@ -1008,7 +1024,9 @@ static struct i2c_driver synaptics_ts_driver = {
 
 static int __devinit synaptics_ts_init(void)
 {
+#ifdef CONFIG_TOUCHSCREEN_SYNAPTICS_SWEEP2WAKE
 wake_lock_init(&sweep2wake_wake_lock, WAKE_LOCK_SUSPEND, "sweep2wake");
+#endif
 	return i2c_add_driver(&synaptics_ts_driver);
 }
 
