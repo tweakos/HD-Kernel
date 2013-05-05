@@ -41,12 +41,6 @@ extern struct platform_device msm_device_mddi0;
 #define MSM_RAM_CONSOLE_BASE	0x00500000
 #define MSM_RAM_CONSOLE_SIZE	0x00100000
 
-/*
- * Reserve space for double buffered full screen
- * res V4L2 video overlay - i.e. 1280x720x1.5x2
-*/
-#define MSM_V4L2_VIDEO_OVERLAY_BUF_SIZE 2764800
-
 #define MSM_PMEM_ADSP_BASE  	0x2B900000
 #define MSM_PMEM_ADSP_SIZE	0x03600000 /* for 8M(4:3) + gpu effect */
 #define PMEM_KERNEL_EBI1_BASE   0x2D600000
