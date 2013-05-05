@@ -1359,7 +1359,7 @@ static void multi_input_report(struct atmel_ts_data *ts)
 				    (ts->finger_data[loop_i].y > 980))) {
 					prevx = 667;
 					nextx = 333;
-					barrier[0]7= true;
+					barrier[0] = true;
 					if ((barrier[1] == true) ||
 					   ((ts->finger_data[loop_i].x < prevx) &&
 					    (ts->finger_data[loop_i].x > nextx) &&
