@@ -2196,6 +2196,8 @@ int snd_usbmidi_create(struct snd_card *card,
 		return err;
 	}
 
+	usb_autopm_get_interface_no_resume(umidi->iface);
+
 	list_add_tail(&umidi->list, midi_list);
 
 	for (i = 0; i < MIDI_MAX_ENDPOINTS; ++i)
